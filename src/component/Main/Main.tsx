@@ -1,71 +1,49 @@
-import React, { useState } from 'react';
+import React from 'react';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Validator from '../../lib/Validator';
-import verificatioType from '../../lib/enum/verificatioType';
+import { withStyles } from '@material-ui/core/styles';
+import { Grid } from '@material-ui/core';
+import OrderContent from '../OrderContent';
+import Steppers from '../Steppers';
+import Form from '../Form';
 
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-    height: 200,
-    width: 200,
-    borderRadius: '50%',
-    border: 0,
-    color: 'white',
-    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+const styles = {
+  mainBlock: {
+    height: '100%',
   },
-  container: {
+  leftBlock: {
+    paddingTop: '120px',
+    width: '20%',
+  },
+  rightBlock: {
+    width: '52%',
+  },
+  rightTopBlock: {
+    height: '120px',
     display: 'flex',
-    flexWrap: 'wrap',
   },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-  },
-  dense: {
-    marginTop: theme.spacing(2),
-  },
-  menu: {
-    width: 200,
-  },
-}));
-
-const Main = () => {
-  const classes = useStyles({});
-  const [dense, setDense] = useState('');
-  const submit = () => {
-    const validator = new Validator();
-    validator.addValidator(dense, [verificatioType.maxLength, 5], '字串長度不得超過 5')
-    validator.addValidator(dense, [verificatioType.minLength, 1], '字串長度不得小於 1')
-
-    // 結果
-    console.log(validator.getValidatorResult())
+  rightBottomBlock: {
+    height: 'calc(100vh - 120px)',
   }
+};
+
+const Main = (props: any) => {
+  const { classes, className } = props;
   return (
-    <>
-      <TextField
-        value={dense}
-        label="Dense"
-        className={clsx(classes.textField, classes.dense)}
-        margin="dense"
-        variant="outlined"
-        onChange={(e) => { setDense(e.target.value); }}
-      />
-      <Button
-        classes={{
-          root: classes.root,
-        }}
-        variant="contained"
-        color="primary"
-        onClick={submit}
-      >
-        Sumit
-      </Button>
-    </>
+    <Grid container justify="center" className={clsx(classes.mainBlock, className)}>
+      <Grid item className={clsx(classes.leftBlock, className)}>
+        <OrderContent />
+      </Grid>
+      <Grid item className={clsx(classes.rightBlock, className)}>
+        <Grid item className={clsx(classes.rightTopBlock, className)}>
+          <Steppers />
+        </Grid>
+        <Grid item className={clsx(classes.rightBottomBlock, className)}>
+          <Form />
+        </Grid>
+      </Grid>
+      <div style={{ position: 'absolute', bottom: 0, zIndex: -1, width: '100%', height: '140px', backgroundColor: '#8DEFCB', }} />
+    </Grid>
   );
 };
 
-export default Main;
+export default withStyles(styles)(Main);
