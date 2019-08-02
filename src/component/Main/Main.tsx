@@ -25,7 +25,9 @@ const styles = {
   },
   leftBlock: {
     paddingTop: '120px',
+    height: '100vh',
     width: '20%',
+    overflowY: 'auto',
     '@media (max-width: 1024px)': {
       width: '24%',
     },
@@ -54,6 +56,9 @@ const styles = {
   },
   rightBottomBlock: {
     height: 'calc(100vh - 120px)',
+    backgroundColor: '#FFFFFF',
+    overflowY: 'auto',
+    boxShadow: '0px 2px 13px 0px rgba(0,0,0,0.08)',
   },
   background: {
     position: 'absolute',

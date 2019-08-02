@@ -8,7 +8,7 @@ const styles = {
   orderPaper: {
     boxSizing: 'border-box',
     backgroundColor: '#F3F3F3',
-    height: '281px',
+    height: '280px',
     padding: '16px',
   },
   item: {

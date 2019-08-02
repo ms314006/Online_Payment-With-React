@@ -10,7 +10,6 @@ const styles = {
     boxSizing: 'border-box',
     padding: '36px',
     height: '100%',
-    boxShadow: '0px 2px 13px 0px rgba(0,0,0,0.08)',
   },
   formTitleBlock: {
     display: 'flex',
@@ -22,7 +21,8 @@ const styles = {
     textAlign: 'center',
   },
   formContent: {
-    marginTop: '80px',
+    marginTop: '72px',
+    marginBottom: '40px',
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'center',
@@ -32,7 +32,7 @@ const styles = {
 const OrderContent = (props: any) => {
   const { classes, className } = props;
   return (
-    <Paper className={clsx(classes.formBlock, className)}>
+    <div className={clsx(classes.formBlock, className)}>
       <div className={clsx(classes.formTitleBlock, className)}>
         <Typography variant="h6" component="h5" className={clsx(classes.formTitle, className)}>
           STEP1. 選擇付款方式
@@ -41,7 +41,7 @@ const OrderContent = (props: any) => {
       <div className={clsx(classes.formContent, className)}>
         <PayTypeItems />
       </div>
-    </Paper>
+    </div>
   )
 }
 
