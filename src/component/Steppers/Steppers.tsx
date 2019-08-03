@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import clsx from 'clsx';
 import { withStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
@@ -56,33 +57,11 @@ function getSteps() {
 
 const Steppers = (props: any) => {
   const { classes, className } = props;
-  const [activeStep, setActiveStep] = React.useState(0);
+  const activeStep = useSelector(state => state.currentStep);
   const steps = getSteps();
 
   function isStepOptional(step) {
     return step === 1;
-  }
-
-  function handleNext() {
-    setActiveStep(prevActiveStep => prevActiveStep + 1);
-  }
-
-  function handleBack() {
-    setActiveStep(prevActiveStep => prevActiveStep - 1);
-  }
-
-  function handleSkip() {
-    if (!isStepOptional(activeStep)) {
-      // You probably want to guard against something like this,
-      // it should never occur unless someone's actively trying to break something.
-      throw new Error("You can't skip a step that isn't optional.");
-    }
-
-    setActiveStep(prevActiveStep => prevActiveStep + 1);
-  }
-
-  function handleReset() {
-    setActiveStep(0);
   }
 
   return (
