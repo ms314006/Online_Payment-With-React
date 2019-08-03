@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import clsx from 'clsx';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
@@ -7,6 +8,7 @@ import OrderContent from '../OrderContent';
 import RwdOrderContent from '../OrderContent/RwdOrderContent';
 import Steppers from '../Steppers';
 import Form from '../Form';
+import stepStatus from '../../lib/enum/step';
 
 const BackToStoreButton = withStyles({
   root: {
@@ -68,18 +70,41 @@ const styles = {
     height: '140px',
     backgroundImage: 'url("./icon/footer-background.svg")',
     backgroundColor: '#DEFFF2',
+    '@media (max-width: 768px)': {
+      position: 'static',
+      bottom: 0,
+    }
+  },
+  footerBackToStore: {
+    display: 'none',
+    '@media (max-width: 768px)': {
+      display: 'block',
+    }
   }
 };
 
 const Main = (props: any) => {
   const { classes, className } = props;
+  const currentStep = useSelector(state => state.currentStep);
   return (
     <Grid container justify="center" className={clsx(classes.mainBlock, className)}>
       <Grid item className={clsx(classes.leftBlock, className)}>
-        <OrderContent />
-        <BackToStoreButton>
-          返回商店
-        </BackToStoreButton>
+        {currentStep === stepStatus.payVictory ? (
+            <div style={{ display: 'flex', justifyContent: 'flex-end', }}>
+              <div style={{ padding: '40px 4px 140px 0px', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'space-around' }}>
+                <div style={{ width: '16px', borderTop: '1px solid #000000', transform: 'rotate(60deg)', }} />
+                Finish
+                <div style={{ width: '16px', borderTop: '1px solid #000000', transform: 'rotate(300deg)', }} />
+              </div>
+              <div style={{ height: '280px', width: '32px', backgroundColor: '#F3F3F3', borderRadius: '10px 0 0 10px', }} />
+            </div>
+          ) : (<>
+            <OrderContent />
+            <BackToStoreButton>
+              返回商店
+            </BackToStoreButton>
+          </>)
+        }
       </Grid>
       <Grid item className={clsx(classes.rightBlock, className)}>
         <div className={clsx(classes.rwdOrderContent, className)}>
@@ -92,7 +117,15 @@ const Main = (props: any) => {
           <Form />
         </Grid>
       </Grid>
-      <div className={clsx(classes.background, className)} />
+      <div className={clsx(classes.background, className)}>
+        {currentStep === stepStatus.payVictory ? null :
+          <div className={clsx(classes.footerBackToStore, className)}>
+            <BackToStoreButton>
+              返回商店
+            </BackToStoreButton>
+          </div>
+        }
+      </div>
     </Grid>
   );
 };
