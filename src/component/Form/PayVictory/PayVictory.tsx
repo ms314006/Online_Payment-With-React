@@ -52,6 +52,11 @@ const PayVictory = (props: any) => {
 const PayVictoryWithStyle = withStyles({ ...styles, })(PayVictory);
 
 export default withRouter(({ history }) => {
+  // 確認 step 狀況
+  const currentStep = useSelector(state => state.currentStep);
+  if (currentStep !== stepStatus.payVictory) {
+    history.push(`/${stepStatus[currentStep]}`)
+  }
   // 將 step 重置
   const payType = useSelector(state => state.payType);
   const dispatch = useDispatch();
