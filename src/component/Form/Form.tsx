@@ -110,20 +110,34 @@ const OrderContent = (props: any) => {
           />
         </Switch>
       </div>
-      {
-        currentStep === stepStatus.payVictory ? (
-          <div className={clsx(`${classes.controlButtonBlock} ${classes.center}`, className)}>
-            <BackToHomePageButton />
-          </div>
-        ) : (
-          <div className={clsx(classes.controlButtonBlock, className)}>
-            {currentStep === stepStatus.payType ?
-              <div /> : <PriviousStepButton />
-            }
-            <NextStepButton />
-          </div>
-        )
-      }
+      <Switch>
+        <Route
+          path={`/${stepStatus[stepStatus.payType]}`}
+          component={() => (
+            <div className={clsx(classes.controlButtonBlock, className)}>
+              <div /> 
+              <NextStepButton />
+            </div>
+          )}
+        />
+        <Route
+          path={`/${stepStatus[stepStatus.payInformation]}`}
+          component={() => (
+            <div className={clsx(classes.controlButtonBlock, className)}>
+              <PriviousStepButton />
+              <NextStepButton />
+            </div>
+          )}
+        />
+        <Route
+          path={`/${stepStatus[stepStatus.payVictory]}`}
+          component={() => (
+            <div className={clsx(`${classes.controlButtonBlock} ${classes.center}`, className)}>
+              <BackToHomePageButton />
+            </div>
+          )}
+        />
+      </Switch>
     </div>
   )
 }
