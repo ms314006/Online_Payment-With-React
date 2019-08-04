@@ -1,8 +1,10 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import clsx from 'clsx';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import { clearPayInfoData } from '../../../../action/onlinePay';
 import stepStatus from '../../../../lib/enum/step';
 
 const BackToHomePageButton = withStyles({
@@ -18,9 +20,11 @@ const BackToHomePageButton = withStyles({
 })(Button);
 
 const BackToHomePageButtonWithRouter = withRouter(({ history }) => {
+  const dispatch = useDispatch();
   return (
     <BackToHomePageButton
       onClick={() => {
+        dispatch(clearPayInfoData());
         history.push(`/${stepStatus[stepStatus.payType]}`);
       }}
     >
