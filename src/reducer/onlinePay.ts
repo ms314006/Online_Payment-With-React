@@ -4,6 +4,7 @@ import Validator from '../lib/Validator';
 import IsEmpty from '../lib/verification/IsEmpty';
 import IsChecked from '../lib/verification/IsChecked';
 import IsEmail from '../lib/verification/IsEmail';
+import IsNumber from '../lib/verification/IsNumber';
 import IsRuleLength from '../lib/verification/IsRuleLength';
 import stepStatus from '../lib/enum/step';
 
@@ -45,8 +46,10 @@ const verificationData = (payType:string, payInformation:any, validator: IValida
       validator.addVerificationResult(new IsEmpty('paymentType', '付款方式', payInformation.paymentType));
       validator.addVerificationResult(new IsEmpty('cardNumber', '卡號', payInformation.cardNumber));
       validator.addVerificationResult(new IsRuleLength('cardNumber', '卡號', payInformation.cardNumber, 12));
+      validator.addVerificationResult(new IsNumber('cardNumber', '卡號', payInformation.cardNumber));
       validator.addVerificationResult(new IsEmpty('selfCode', '安全碼', payInformation.selfCode));
       validator.addVerificationResult(new IsRuleLength('selfCode', '安全碼', payInformation.selfCode, 3));
+      validator.addVerificationResult(new IsNumber('selfCode', '安全碼', payInformation.selfCode));
       validator.addVerificationResult(new IsEmpty('validMonth', '有效月', payInformation.validMonth));
       validator.addVerificationResult(new IsEmpty('validYear', '有效年', payInformation.validYear));
       break;
