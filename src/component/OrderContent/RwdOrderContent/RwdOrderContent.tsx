@@ -16,6 +16,7 @@ const styles = {
     boxSizing: 'border-box',
     backgroundColor: '#F3F3F3',
     transition: 'left 0.5s',
+    zIndex: '1',
   },
   openOrderTitleBlock: {
     left: '200px',
@@ -38,6 +39,7 @@ const styles = {
     width: '200px',
     padding: '16px',
     transition: 'left 0.5s',
+    zIndex: '1',
   },
   openOrderPaper: {
     left: '0px',
