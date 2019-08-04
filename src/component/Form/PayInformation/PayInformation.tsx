@@ -7,10 +7,12 @@ import Typography from '@material-ui/core/Typography';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import StorePay from './StorePay';
 import AtmPay from './AtmPay';
 import CreditCardPay from './CreditCardPay';
-import { setStep } from '../../../action/onlinePay';
+import { setStep, changePayInfoData } from '../../../action/onlinePay';
+import { IValidator } from '../../../lib/interface/IValidator';
 import stepStatus from '../../../lib/enum/step';
 import payInfoStyles from './styles';
 
@@ -33,6 +35,8 @@ const styles = {
 const PayInformation = (props: any) => {
   const { classes, className } = props;
   const payType = useSelector(state => state.payType);
+  const validator: IValidator = useSelector(state => state.validator);
+  const payInformation = useSelector(state => state.payInformation);
   const dispatch = useDispatch();
   const getCorrespondPayInformationPage = (type: string) => {
     switch (type) {
@@ -58,19 +62,40 @@ const PayInformation = (props: any) => {
         <TextField
           label="Email"
           variant="outlined"
+          error={!validator.getVerificationResult('email')}
           className={clsx(classes.inputs, className)}
+          value={payInformation.email}
+          onChange={(event) => {
+            dispatch(changePayInfoData({
+              email: event.target.value
+            }))
+          }}
         />
+        <FormHelperText error={!validator.getVerificationResult('email')}>
+          {validator.getVerificationMessage('email')}
+        </FormHelperText>
       </div>
       <div className={clsx(classes.singleDataBlock, className)}>
         <FormControlLabel
           control={
-            <Checkbox color="default" onChange={() => {}} />
+            <Checkbox
+              checked={payInformation.payRule}
+              color="default"
+              onChange={(event) => {
+                dispatch(changePayInfoData({
+                  payRule: event.target.checked
+                }))
+              }}
+            />
           }
           label="請再次確認「訂單資訊」與「付款資訊」，付款完成後將發送通知信至您的 E-mail 信箱"
         />
         <div className={clsx(classes.servicesRule, className)}>
           第三方支付金流平台服務條款
         </div>
+        <FormHelperText error={!validator.getVerificationResult('payRule')}>
+          {validator.getVerificationMessage('payRule')}
+        </FormHelperText>
       </div>
     </div>
   )

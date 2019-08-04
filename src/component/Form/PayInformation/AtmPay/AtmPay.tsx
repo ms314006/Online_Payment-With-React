@@ -7,7 +7,10 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import Select from '@material-ui/core/Select';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import TextField from '@material-ui/core/TextField';
+import { IValidator } from '../../../../lib/interface/IValidator';
+import { changePayInfoData, } from '../../../../action/onlinePay';
 import payInfoStyles from '../styles';
 
 const styles = {
@@ -20,6 +23,9 @@ const styles = {
 
 const AtmPay = (props: any) => {
   const { classes, className } = props;
+  const payInformation = useSelector(state => state.payInformation);
+  const validator: IValidator = useSelector(state => state.validator);
+  const dispatch = useDispatch();
   const inputLabel = React.useRef<HTMLLabelElement>(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
   React.useEffect(() => {
@@ -31,16 +37,18 @@ const AtmPay = (props: any) => {
         <Typography variant="body1" className={clsx(classes.dataTitle, className)}>
           付款銀行：
         </Typography>
-        <FormControl variant="outlined">
-          <InputLabel ref={inputLabel} htmlFor="outlined-bank-native-simple">
+        <FormControl variant="outlined" error={!validator.getVerificationResult('bank')}>
+          <InputLabel ref={inputLabel}>
             Bank
           </InputLabel>
           <Select
             native
-            value=""
-            onChange={() => {}}
+            value={payInformation.bank}
+            onChange={(event) => {
+              dispatch(changePayInfoData({ bank: event.target.value, }));
+            }}
             input={
-              <OutlinedInput name="bank" labelWidth={labelWidth} />
+              <OutlinedInput labelWidth={labelWidth} />
             }
             className={clsx(classes.inputs, className)}
           >
@@ -48,6 +56,9 @@ const AtmPay = (props: any) => {
             <option value="ctbcbank">中國信託商業銀行</option>
             <option value="cathaybk">國泰世華銀行</option>
           </Select>
+          <FormHelperText>
+            {validator.getVerificationMessage('bank')}
+          </FormHelperText>
         </FormControl>
       </div>
       <div className={clsx(`${classes.atmPayRule}`)}>
