@@ -129,7 +129,7 @@ const reducer = (state = initState, action: any) => {
           ...action.payload,
         },
       };
-    case actions.CLEAR_PAY_INFO_DATA:
+    case actions.CLEAN_PAY_INFO_DATA:
       return {
         ...state,
         ...initState,

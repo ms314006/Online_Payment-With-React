@@ -25,8 +25,8 @@ export const changePayInfoData = (data: any) => ({
   },
 });
 
-export const CLEAR_PAY_INFO_DATA = 'CLEAR_PAY_INFO_DATA';
+export const CLEAN_PAY_INFO_DATA = 'CLEAN_PAY_INFO_DATA';
 
-export const clearPayInfoData = () => ({
-  type: CLEAR_PAY_INFO_DATA,
+export const cleanPayInfoData = () => ({
+  type: CLEAN_PAY_INFO_DATA,
 });
